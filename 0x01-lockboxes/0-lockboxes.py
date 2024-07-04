@@ -7,23 +7,35 @@ Problem: You have n number of locked boxes in front of you.
 Task: Write a method that determines if all the boxes can be opened.
 """
 
-
 def canUnlockAll(boxes):
     """
-    Function that checks with boolean value if the list type and
-    length to invoke two for iterations one to traverse the list
-    and the other to compaer if key is idx or not in order to open
+    Function that checks if all boxes can be unlocked.
+    Uses a stack for a depth-first search (DFS) approach to track and unlock boxes.
     """
-    if type(boxes) is not list:
+    if not isinstance(boxes, list) or len(boxes) == 0:
         return False
-    elif (len(boxes)) == 0:
-        return False
-    for k in range(1, len(boxes) - 1):
-        boxes_checked = False
-        for idx in range(len(boxes)):
-            boxes_checked = k in boxes[idx] and k != idx
-            if boxes_checked:
-                break
-        if boxes_checked is False:
-            return boxes_checked
-    return True
+
+    n = len(boxes)
+    unlocked = [False] * n
+    unlocked[0] = True
+    stack = [0]
+
+    while stack:
+        current_box = stack.pop()
+        for key in boxes[current_box]:
+            if key < n and not unlocked[key]:
+                unlocked[key] = True
+                stack.append(key)
+
+    return all(unlocked)
+
+# Example usage
+if __name__ == "__main__":
+    boxes = [[1], [2], [3], [4], []]
+    print(canUnlockAll(boxes))  # True
+
+    boxes = [[1, 4, 6], [2], [0, 4, 1], [5, 6, 2], [3], [4, 1], [6]]
+    print(canUnlockAll(boxes))  # True
+
+    boxes = [[1, 4], [2], [0, 4, 1], [3], [], [4, 1], [5, 6]]
+    print(canUnlockAll(boxes))  # False
