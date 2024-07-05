@@ -2,35 +2,64 @@
 """Solves the lock boxes puzzle """
 
 
-def can_unlock_all(all_boxes):
-    """
-    Determine if all boxes can be opened.
-    
+def look_next_opened_box(opened_boxes):
+    """Looks for the next opened box
     Args:
-    all_boxes: List of lists, where each sublist contains keys to other boxes.
-    
+        opened_boxes (dict): Dictionary which contains boxes already opened
     Returns:
-    bool: True if all boxes can be opened, False otherwise.
+        list: List with the keys contained in the opened box
     """
-    if not all_boxes:
-        return False
+    for index, box in opened_boxes.items():
+        if box.get('status') == 'opened':
+            box['status'] = 'opened/checked'
+            return box.get('keys')
+    return None
 
-    my_keys = [0]
-    keys_to_check = my_keys.copy()  # Create a copy of the initial keys
 
-    while keys_to_check:
-        new_keys = []
-        for key in keys_to_check:
-            for box_key in all_boxes[key]:
-                if box_key not in my_keys and box_key < len(all_boxes):
-                    my_keys.append(box_key)
-                    new_keys.append(box_key)
-        keys_to_check = new_keys
-    return len(my_keys) == len(all_boxes)
+def canUnlockAll(boxes):
+    """Check if all boxes can be opened
+    Args:
+        boxes (list): List which contain all the boxes with the keys
+    Returns:
+        bool: True if all boxes can be opened, otherwise, False
+    """
+    if len(boxes) <= 1 or boxes == [[]]:
+        return True
 
-# Example usage
-boxes_example1 = [[1], [2], [3], []]
-print(can_unlock_all(boxes_example1))  # Output: True
+    aux = {}
+    while True:
+        if len(aux) == 0:
+            aux[0] = {
+                'status': 'opened',
+                'keys': boxes[0],
+            }
+        keys = look_next_opened_box(aux)
+        if keys:
+            for key in keys:
+                try:
+                    if aux.get(key) and aux.get(key).get('status') \
+                       == 'opened/checked':
+                        continue
+                    aux[key] = {
+                        'status': 'opened',
+                        'keys': boxes[key]
+                    }
+                except (KeyError, IndexError):
+                    continue
+        elif 'opened' in [box.get('status') for box in aux.values()]:
+            continue
+        elif len(aux) == len(boxes):
+            break
+        else:
+            return False
 
-boxes_example2 = [[1, 4], [2], [3], [], []]
-print(can_unlock_all(boxes_example2))  # Output: False
+    return len(aux) == len(boxes)
+
+
+def main():
+    """Entry point"""
+    canUnlockAll([[]])
+
+
+if __name__ == '__main__':
+    main()
