@@ -45,7 +45,7 @@ Write a method that determines if all the boxes can be opened.
 ```python
 #!/usr/bin/python3
 
-canUnlockAll = __import__('0-lockboxes').canUnlockAll
+canUnlockAll = __import__('0_lockboxes').canUnlockAll
 
 boxes = [[1], [2], [3], [4], []]
 print(canUnlockAll(boxes))  # True
