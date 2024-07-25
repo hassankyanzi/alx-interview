@@ -1,3 +1,5 @@
+# Create the README.md file with the provided content
+readme_content = """
 # 0x04. UTF-8 Validation
 
 ## Description
@@ -29,18 +31,18 @@ The script `utf8_validation.py` checks if a given dataset represents a valid UTF
 
 ### Example
 
-```python
+\`\`\`python
 #!/usr/bin/python3
-"""
+\"\"\"
 UTF-8 Validation
-"""
+\"\"\"
 
 def validUTF8(data):
-    """
+    \"\"\"
     Check if the data set represents a valid UTF-8 encoding.
     :param data: List of integers representing the bytes of the data set
     :return: True if data is a valid UTF-8 encoding, else False
-    """
+    \"\"\"
     num_bytes = 0
 
     for num in data:
@@ -75,4 +77,28 @@ if __name__ == "__main__":
     
     data = [235, 140, 4]  # This should return False
     print(validUTF8(data))
+\`\`\`
+
+## How to Run
+
+1. Clone the repository and navigate to the project directory.
+2. Ensure the script `utf8_validation.py` is executable:
+    \`\`\`sh
+    chmod +x utf8_validation.py
+    \`\`\`
+3. Run the script with example data:
+    \`\`\`sh
+    ./utf8_validation.py
+    \`\`\`
+
+## Resources
+
+- [Bitwise Operations in Python](https://www.w3schools.com/python/python_operators.asp)
+- [UTF-8 Wikipedia](https://en.wikipedia.org/wiki/UTF-8)
+- [The Absolute Minimum Every Software Developer Absolutely, Positively Must Know About Unicode and Character Sets](https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/)
+
+## Author
+
+Kyanzi Hassan Musisi - [Kyanzi Hassan Musisi](https://www.x.com/hassan_kyanzi)
+"""
 
